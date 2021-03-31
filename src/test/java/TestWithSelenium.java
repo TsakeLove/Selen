@@ -34,6 +34,7 @@ public class TestWithSelenium {
         driver = createWebDriver();
         waiter = createWebDriverWait(driver);
         System.out.println("Test start");
+        System.out.println("Test start");
     }
 
     @Test
