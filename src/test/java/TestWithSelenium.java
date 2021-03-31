@@ -53,7 +53,7 @@ public class TestWithSelenium {
         Assert.assertEquals(name, "Data Test");
         driver.quit();
     }
-
+//
     @After
     public void close() {
         driver.quit();
