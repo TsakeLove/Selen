@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: TestWithSelenium
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.341 s <<< FAILURE! - in TestWithSelenium
+testAuthName(TestWithSelenium)  Time elapsed: 0.205 s  <<< ERROR!
+java.lang.IllegalStateException: The driver is not executable: /Users/igor/Downloads/Selenium-with-JTest-master-2/src/test/resources/chromedriverlinux
+	at TestWithSelenium.createWebDriver(TestWithSelenium.java:64)
+	at TestWithSelenium.start(TestWithSelenium.java:34)
+
+testAuthName(TestWithSelenium)  Time elapsed: 0.211 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebDriver.quit()" because "this.driver" is null
+	at TestWithSelenium.close(TestWithSelenium.java:59)
+
