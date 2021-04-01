@@ -2,12 +2,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LoginPage;
+import pages.SignUpPage;
+import pages.UserMainPhotoPage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,16 +16,15 @@ import java.util.Map;
 
 public class TestWithSelenium {
 
-    private static final String email = "bicago7317@heroulo.com";
-    private static final String email2 = "DataTes58765956";
-    private static final String wrongEmail = "asasq3@221.1";
-    private static final String password = "Aa123456";
-    private static final String trueLink = "hromadske.ua";
-    private static final String err = "Мы заметили несколько необычных попыток входа в вашу учетную запись. С целью обеспечения ее безопасности просим вас ввести свой номер телефона или имя пользователя, чтобы подтвердить, что это действительно вы.";
-    private static final String wrongData = "Введенные адрес электронной почты и пароль не совпадают с сохраненными в нашей базе данных. Проверьте правильность введенных данных и повторите попытку.";
+    private static final String email = "bidaritterhm@gmail.com";
+    private static final String invalidEmail = "bidarit(terhm@gmail.com";
+    private static final String invalidEmail2 = "tbiddwarit222terhqm@gmail.com";
+    private static final String password = "Nazar2021KPI2021";
+    private static final String name = "Саня";
+    private static final String surname = "Красівий";
+    private static final String searchedPerson = "Володимир Зеленський";
 
-
-    private static final long timeOutInSeconds = 30;
+    private static final long timeOutInSeconds = 20;
 
     private WebDriverWait waiter;
     private WebDriver driver;
@@ -38,55 +38,46 @@ public class TestWithSelenium {
     }
 
     @Test
-    public void testAuthName() {
+    public void openUserPageFromLinkObjectPage() {
+        UserMainPhotoPage userPage = new UserMainPhotoPage(driver, waiter, "https://www.facebook.com/photo/?fbid=2431988927051469&set=a.1376998622550510");
+        String username = userPage.searchUserByUsernameInLink(searchedPerson).getUsername();
 
-        WebDriver driver =  new ChromeDriver();
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebDriverWait waiter = createWebDriverWait(driver);
-
-        LoginPage loginPage = new LoginPage(driver, waiter);
-        loginPage.loginValidUser(email, password, email2);
-
-
-        loginPage.loginCheck();
-
-        String name = driver.findElement(By.cssSelector("#react-root > div > div > div.css-1dbjc4n.r-18u37iz.r-13qz1uu.r-417010 > main > div > div > div > div > div > div.css-1dbjc4n.r-aqfbo4.r-14lw9ot.r-j7yic.r-rull8r.r-qklmqi.r-gtdqiz.r-1gn8etr.r-1g40b8q > div.css-1dbjc4n.r-1loqt21.r-136ojw6 > div > div > div > div > div.css-1dbjc4n.r-16y2uox.r-1wbh5a2.r-1pi2tsx.r-1777fci > div > h2 > div > div > div > span.css-901oao.css-16my406.css-bfa6kz.r-18jsvk2.r-poiln3.r-1vr29t4.r-bcqeeo.r-3s2u2q.r-qvutc0 > span > span")).getText();
-        Assert.assertEquals(name, "Data Test");
-        driver.quit();
+//        Assert.assertEquals(username, searchedPerson);
+        Assert.assertTrue(username.contains(searchedPerson));
     }
 
-//    @Test
-//    public void testSignUPWithInvalidUsedEmailPageObject() {
-//        SignUpPage signUpPage = new SignUpPage(driver, waiter);
-//        String errorMessage = signUpPage.signUpWithInvalidUsedEmail(name, surname, invalidEmail, password);
-//
-//        Assert.assertTrue(errorMessage.equals("Введите действительный номер мобильного телефона или эл. адрес.") ||
-//                errorMessage.equals("Введите действительный электронный адрес."));
-//    }
-//
-//    @Test
-//    public void testSignUPWithAlreadyUsedEmailObjectPage() {
-//        SignUpPage signUpPage = new SignUpPage(driver, waiter);
-//        String errorMessage = signUpPage.signUpWithAlreadyUsedEmail(name, surname, email, password).getErrorMessage();
-//
-//        Assert.assertEquals(errorMessage, "Извините, мы не можем вас зарегистрировать.");
-//    }
-//
-//    @Test
-//    public void testLoginWithValidDataObjectPage() {
-//        LoginPage loginPage = new LoginPage(driver, waiter);
-//        String greeting = loginPage.loginValidUser(email, password).getGreeting();
-//
-//        Assert.assertEquals(greeting, "Ваш аккаунт отключен");
-//    }
+    @Test
+    public void testSignUPWithInvalidUsedEmailPageObject() {
+        SignUpPage signUpPage = new SignUpPage(driver, waiter);
+        String errorMessage = signUpPage.signUpWithInvalidUsedEmail(name, surname, invalidEmail, password);
 
-//    @Test
-//    public void testLoginWithInvalidDataObjectPage() {
-//        LoginPage loginPage = new LoginPage(driver, waiter);
-//        String error = loginPage.loginInvalidUser(invalidEmail2, password);
-//
-//        Assert.assertEquals(error, "Неверное имя пользователя или пароль");
-//    }
+        Assert.assertTrue(errorMessage.equals("Введите действительный номер мобильного телефона или эл. адрес.") ||
+                errorMessage.equals("Введите действительный электронный адрес."));
+    }
+
+    @Test
+    public void testSignUPWithAlreadyUsedEmailObjectPage() {
+        SignUpPage signUpPage = new SignUpPage(driver, waiter);
+        String errorMessage = signUpPage.signUpWithAlreadyUsedEmail(name, surname, email, password).getErrorMessage();
+
+        Assert.assertEquals(errorMessage, "Извините, мы не можем вас зарегистрировать.");
+    }
+
+    @Test
+    public void testLoginWithValidDataObjectPage() {
+        LoginPage loginPage = new LoginPage(driver, waiter);
+        String greeting = loginPage.loginValidUser(email, password).getGreeting();
+
+        Assert.assertEquals(greeting, "Ваш аккаунт отключен");
+    }
+
+    @Test
+    public void testLoginWithInvalidDataObjectPage() {
+        LoginPage loginPage = new LoginPage(driver, waiter);
+        String error = loginPage.loginInvalidUser(invalidEmail2, password);
+
+        Assert.assertEquals(error, "Неверное имя пользователя или пароль");
+    }
 
 
     @After
