@@ -23,7 +23,8 @@ public class TestWithSelenium {
     private static final String err = "Мы заметили несколько необычных попыток входа в вашу учетную запись. С целью обеспечения ее безопасности просим вас ввести свой номер телефона или имя пользователя, чтобы подтвердить, что это действительно вы.";
     private static final String wrongData = "Введенные адрес электронной почты и пароль не совпадают с сохраненными в нашей базе данных. Проверьте правильность введенных данных и повторите попытку.";
 
-    private static final long timeOutInSeconds = 20;
+
+    private static final long timeOutInSeconds = 30;
 
     private WebDriverWait waiter;
     private WebDriver driver;
@@ -33,7 +34,6 @@ public class TestWithSelenium {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriverlinux");
         driver = createWebDriver();
         waiter = createWebDriverWait(driver);
-        System.out.println("Test start");
         System.out.println("Test start");
     }
 
@@ -54,7 +54,41 @@ public class TestWithSelenium {
         Assert.assertEquals(name, "Data Test");
         driver.quit();
     }
+
+//    @Test
+//    public void testSignUPWithInvalidUsedEmailPageObject() {
+//        SignUpPage signUpPage = new SignUpPage(driver, waiter);
+//        String errorMessage = signUpPage.signUpWithInvalidUsedEmail(name, surname, invalidEmail, password);
 //
+//        Assert.assertTrue(errorMessage.equals("Введите действительный номер мобильного телефона или эл. адрес.") ||
+//                errorMessage.equals("Введите действительный электронный адрес."));
+//    }
+//
+//    @Test
+//    public void testSignUPWithAlreadyUsedEmailObjectPage() {
+//        SignUpPage signUpPage = new SignUpPage(driver, waiter);
+//        String errorMessage = signUpPage.signUpWithAlreadyUsedEmail(name, surname, email, password).getErrorMessage();
+//
+//        Assert.assertEquals(errorMessage, "Извините, мы не можем вас зарегистрировать.");
+//    }
+//
+//    @Test
+//    public void testLoginWithValidDataObjectPage() {
+//        LoginPage loginPage = new LoginPage(driver, waiter);
+//        String greeting = loginPage.loginValidUser(email, password).getGreeting();
+//
+//        Assert.assertEquals(greeting, "Ваш аккаунт отключен");
+//    }
+
+//    @Test
+//    public void testLoginWithInvalidDataObjectPage() {
+//        LoginPage loginPage = new LoginPage(driver, waiter);
+//        String error = loginPage.loginInvalidUser(invalidEmail2, password);
+//
+//        Assert.assertEquals(error, "Неверное имя пользователя или пароль");
+//    }
+
+
     @After
     public void close() {
         driver.quit();
@@ -76,8 +110,8 @@ public class TestWithSelenium {
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
         options.addArguments("headless");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+//        options.addArguments("--no-sandbox");
+//        options.addArguments("--disable-dev-shm-usage");
         return options;
     }
 }
